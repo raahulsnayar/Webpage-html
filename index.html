@@ -16,7 +16,14 @@
             text-align: center;
             color: #2c3e50;
         }
+        .intro {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
         .entry {
+            display: none; /* Hide initially */
             background: white;
             border-radius: 5px;
             padding: 10px;
@@ -25,9 +32,17 @@
         }
         img {
             width: 96%;
-            height: 90%;
+            height: auto;
             border-radius: 8px;
         }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        /* Feedback form styling */
         form {
             margin-top: 20px;
             padding: 15px;
@@ -43,14 +58,14 @@
             border-radius: 4px;
         }
         button {
-            background-color: #2ecc71; /* Green */
+            background-color: #2ecc71;
             color: white;
             padding: 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
-        button:hover { 
+        button:hover {
             background-color: #27ae60;
         }
     </style>
@@ -59,49 +74,71 @@
 
 <h1>Nature's Wonders</h1>
 
-<div class="entry">
+<div class="intro">
+    <p>Welcome to <strong>Nature's Wonders</strong>! Here, we celebrate the breathtaking landscapes and captivating wildlife that make our planet truly extraordinary. Whether you're an avid nature lover, an explorer at heart, or just curious to see more of our world, this page is designed to bring some of Earth’s most stunning scenes right to you.</p>
+    <p>Take a virtual journey through towering redwood forests, witness the elegance of the elusive snow leopard, or dive into the vibrant world of coral reefs. Each place and creature has a unique story, a slice of natural beauty waiting to be discovered. Simply select a scenery from the dropdown below, and let the adventure unfold!</p>
+    <p>We hope that, through these glimpses into the wild and wonderful corners of our world, you’ll feel a renewed appreciation for the diversity of life and landscapes that surround us. Enjoy your journey!</p>
+</div>
+
+<label for="sceneryDropdown">Choose a scenery to view:</label>
+<select id="sceneryDropdown" onchange="showScenery()">
+    <option value="">Select a scenery...</option>
+    <option value="redwood">Redwood Trees</option>
+    <option value="snowLeopard">Snow Leopard</option>
+    <option value="grandCanyon">Grand Canyon</option>
+    <option value="coralReefs">Coral Reefs</option>
+    <option value="feedback">Feedback</option>
+</select>
+
+<!-- Scenery Entries -->
+<div id="redwood" class="entry">
     <h2>Redwood Trees</h2>
-    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/redwood.jpg?raw=true" width = "450" height = "300">
+    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/redwood.jpg?raw=true" alt="Redwood Trees">
     <p>The majestic Redwood trees are among the tallest living trees on Earth, found in California.</p>
 </div>
 
-<div class="entry">
+<div id="snowLeopard" class="entry">
     <h2>Snow Leopard</h2>
-    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/snow%20leopard.jpg?raw=true" width = "100" height = "100" >
+    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/snow%20leopard.jpg?raw=true" alt="Snow Leopard">
     <p>The Snow Leopard is a beautiful big cat native to the mountain ranges of Central and South Asia.</p>
 </div>
 
-<div class="entry">
+<div id="grandCanyon" class="entry">
     <h2>Grand Canyon</h2>
-    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/grand%20canyon.jpg?raw=true" width = "100" height = "100">
+    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/grand%20canyon.jpg?raw=true" alt="Grand Canyon">
     <p>The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, USA.</p>
 </div>
 
-<div class="entry">
+<div id="coralReefs" class="entry">
     <h2>Coral Reefs</h2>
-    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/coral%20reefs.jpg?raw=true" width = "100" height = "100">
+    <img src="https://github.com/RaghavRaina1234/Webpage-html/blob/main/coral%20reefs.jpg?raw=true" alt="Coral Reefs">
     <p>Coral reefs are diverse underwater ecosystems held together by calcium carbonate structures.</p>
 </div>
-<div class="footer">
-            <p>Connect with me on <a href="https://github.com/RaghavRaina1234" target="_blank" style="color: #007acc; text-decoration: none;">GitHub</a>!</p>
-        </div>
-    </div>
 
-<h2 class="section-title">Contact Me</h2>
-            <form action="mailto:raghavrana007@gmail.com" method="POST" enctype="text/plain">
-                <div>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="Your Email" required>
-                </div>
-                <div>
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
-                </div>
-                <button type="submit">Send Message</button>
-            </form>
+<!-- Feedback Form -->
+<div id="feedback" class="entry">
+    <h2>Feedback</h2>
+    <form action="https://formspree.io/f/movqeqad" method="POST">
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="number" name="rating" min="1" max="5" placeholder="Rate (1-5)" required>
+        <textarea name="comments" rows="4" placeholder="Additional Comments"></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+</div>
+
+<script>
+    function showScenery() {
+        // Hide all entries
+        const entries = document.querySelectorAll('.entry');
+        entries.forEach(entry => entry.style.display = 'none');
+
+        // Show selected entry
+        const selectedValue = document.getElementById('sceneryDropdown').value;
+        if (selectedValue) {
+            document.getElementById(selectedValue).style.display = 'block';
+        }
+    }
+</script>
+
 </body>
 </html>
